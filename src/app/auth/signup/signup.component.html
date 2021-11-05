@@ -1,15 +1,42 @@
 <section class="section-class">
     <!-- <button mat-raised-button color="primary">Primary</button> -->
-    <form>
-        
+    <form fxLayout="column" fxLayoutAlign="center center" #setupForm="ngForm" (ngSubmit)="onSubmit(setupForm)">
+        <mat-form-field>
+            <input type="email" 
+            matInput 
+            required
+            placeholder="Your Email" 
+            ngModel 
+            name="email"
+            #email="ngModel">
+            <mat-error *ngIf="email.hasError('required')">Email must be provided</mat-error>
+            <mat-error *ngIf="email.invalid"> Invalid email</mat-error>
+          </mat-form-field>
+    
+          <mat-form-field appearance="legacy" hintLabel="Password should be more than 6 characters.">
+            <input type="password" 
+            matInput 
+            placeholder="Password"
+            required
+            minlength="6"
+            name="password"
+            ngModel
+            #passwd="ngModel">
+            <mat-hint align="end">{{passwd.value?.length}} / 6</mat-hint>
+            <mat-error *ngIf="passwd.hasError('required')">Password must be provided</mat-error>
+            <mat-error *ngIf="passwd.value?.length < 6 && !passwd.hasError('required')">Invalid Password</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>Your Birthday</mat-label>
+            <input matInput [matDatepicker]="picker" [max]="maxDate" ngModel name="birthdate" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-checkbox ngModel name="agree" required>Agree to terms</mat-checkbox>
+
+          <button type="submit" mat-raised-button color="primary">Submit</button>
     </form>
-
-    <mat-form-field>
-        <input type="email" matInput placeholder="Your Email" >
-      </mat-form-field>
-
-      <mat-form-field appearance="legacy">
-        <input type="password" matInput placeholder="Password">
-      </mat-form-field>
 
 </section>
